@@ -29,7 +29,7 @@ public class MsgConsumer {
         latest(默认) ：只消费自己启动之后发送到主题的消息
         earliest：第一次从头开始消费，以后按照消费offset记录继续消费，这个需要区别于consumer.seekToBeginning(每次都从头开始消费)
         */
-//        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 		/*
 		consumer给broker发送心跳的间隔时间，broker接收到心跳如果此时有rebalance发生会通过心跳响应将
 		rebalance方案下发给consumer，这个时间可以稍微短一点
@@ -104,7 +104,7 @@ public class MsgConsumer {
             if (records.count() > 0) {
                 // 手动同步提交offset，当前线程会阻塞直到offset提交成功
                 // 一般使用同步提交，因为提交之后一般也没有什么逻辑代码了
-                //consumer.commitSync();
+                consumer.commitSync();
 
                 // 手动异步提交offset，当前线程提交offset不会阻塞，可以继续处理后面的程序逻辑
                 /*consumer.commitAsync(new OffsetCommitCallback() {
